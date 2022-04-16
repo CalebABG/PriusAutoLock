@@ -82,15 +82,14 @@ void setup()
 
   if (!CAN.begin(CAN_BUS_SPEED))
   {
-    Serial.println("Starting CAN failed!");
+    Serial.println("CAN begin failed");
     while (1);
   }
 }
 
 void printHex(long num)
 {
-  if (num < 0x10)
-    Serial.print("0");
+  if (num < 0x10) Serial.print("0");
   Serial.print(num, HEX);
 }
 
@@ -107,17 +106,17 @@ bool sendLockAllDoorsCANPacket()
 void handleAutoLock()
 {
   int packetSize = CAN.parsePacket();
-  if (packetSize < 1)
-    return;
+  if (packetSize < 1) return;
 
-  CANPacket packet = {
+  CANPacket packet = 
+  {
       .id = CAN.packetId(),
       .rtr = CAN.packetRtr(),
       .ide = CAN.packetExtended(),
       .dlc = CAN.packetDlc()
   };
 
-  for (byte i = 0; CAN.available() && i < packet.dlc; ++i)
+  for (byte i = 0; i < packet.dlc && CAN.available(); ++i)
     packet.data[i] = CAN.read();
 
   if (packet.id == DOOR_LOCKS_CAN_ID)
@@ -129,7 +128,7 @@ void handleAutoLock()
   if (packet.id == VEHICLE_SPEED_CAN_ID)
   {
     // Higher speed bias due to ceil
-    lastVehicleSpeedMPHRead = (byte)ceil(packet.data[2] * 0.6213711922F);
+    lastVehicleSpeedMPHRead = (byte)ceil(packet.data[2] * 0.6214F);
     Serial.println(lastVehicleSpeedMPHRead);
   }
 
@@ -219,13 +218,10 @@ void canPacketsForPython()
     }
 
     // Data
-    byte i = 0;
-    while (CAN.available() && i < dlc)
+    for (byte i = 0; i < dlc && CAN.available(); ++i)
     {
       printHex(CAN.read());
-      if (i < dlc - 1)
-        Serial.print(":");
-      ++i;
+      if (i < dlc - 1) Serial.print(":");
     }
 
     Serial.print(NEWLINE);
