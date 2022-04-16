@@ -1,6 +1,6 @@
 def get_all_lines(file_name):
     lines = []
-    if file_name is not None or file_name != "":
+    if file_name is not None and file_name != "":
         with open(file_name) as file:
             while True:
                 line_read = file.readline()
