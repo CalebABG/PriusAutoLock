@@ -1,0 +1,10 @@
+PriusAutoLock-Arduino/.pio
+PriusAutoLock-Arduino/.vscode
+
+PriusAutoLock-Python/__pycache__/
+PriusAutoLock-Python/.vscode
+PriusAutoLock-Python/.idea
+PriusAutoLock-Python/.env
+PriusAutoLock-Python/.venv
+PriusAutoLock-Python/venv
+PriusAutoLock-Python/env
