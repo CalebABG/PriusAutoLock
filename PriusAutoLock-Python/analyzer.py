@@ -26,7 +26,7 @@ if __name__ == '__main__':
         for val in can_dict['3CA']:
             data = val[val.rfind(',') + 1:].split(':')
             kph = int(data[-3], base=16)
-            mph = kph * 0.6213711922
+            mph = kph * 0.6214
             print(mph)
     except Exception as ex:
         print(f"Error occurred: {ex}")
