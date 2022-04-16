@@ -16,11 +16,8 @@ Track State with State Machine:
   0xXX
     Invalid state, go to state 0x10
 
-Read Vehicle Speed First --- 0x3CA (Vehicle Speed)
-  Read and save speed (convert to MPH)
-
-Read Door Lock Status --- 0x5B6 (Door Lock Status)
-  Read and save status to temp var
+Read Door Lock Status First --- 0x5B6 (Door Lock Status)
+  Read and save status
 
   If speed is greater than threshold
       If any doors are physically OPEN
@@ -32,6 +29,9 @@ Read Door Lock Status --- 0x5B6 (Door Lock Status)
       Send lock command
         If unable to send, retry up to 10 times
           If the speed has dropped below threshold on retry, cancel sending command
+
+Read Vehicle Speed --- 0x3CA (Vehicle Speed)
+  Read and save speed (convert to MPH)
 */
 
 #define CAN_BAUD_RATE 115200
